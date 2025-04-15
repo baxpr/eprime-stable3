@@ -10,14 +10,19 @@ summary = readtable(eprime_summary);
 % Split by "easy" and "hard" based on fmri run. We will assume the 10/50/90
 % decks in inds1 and the 20/40/80 decks in inds2.
 inds12 = ismember(info.Run,[1 2]);
-inds34 = ismember(info.Run,[3 4]);
+
+% Identify the specific image set
+if any(strcmp(info.ChosenColor(inds12),'g-1.jpg')), ch='g'; end
+if any(strcmp(info.ChosenColor(inds12),'r-1.jpg')), ch='r'; end
+if any(strcmp(info.ChosenColor(inds12),'p-1.jpg')), ch='p'; end
+if any(strcmp(info.ChosenColor(inds12),'b-1.jpg')), ch='b'; end
 
 % Coding and fit for "easy". Default to NaN so fitModel will ignore
 % responses or trials with missing info.
 responses1 = nan(sum(inds12),1);
-responses1(strcmp(info.ChosenColor(inds12),'g-1.jpg')) = 1;
-responses1(strcmp(info.ChosenColor(inds12),'g-2.jpg')) = 2;
-responses1(strcmp(info.ChosenColor(inds12),'g-3.jpg')) = 3;
+responses1(strcmp(info.ChosenColor(inds12),[ch '-1.jpg'])) = 1;
+responses1(strcmp(info.ChosenColor(inds12),[ch '-2.jpg'])) = 2;
+responses1(strcmp(info.ChosenColor(inds12),[ch '-3.jpg'])) = 3;
 
 outcomes1 = nan(sum(inds12),1);
 outcomes1(strcmp(info.Outcome(inds12),'Lose')) = 0;
