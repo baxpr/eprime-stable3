@@ -12,10 +12,11 @@ summary = readtable(eprime_summary);
 inds12 = ismember(info.Run,[1 2]);
 
 % Identify the specific image set
-if any(strcmp(info.ChosenColor(inds12),'g-1.jpg')), ch='g'; end
-if any(strcmp(info.ChosenColor(inds12),'r-1.jpg')), ch='r'; end
-if any(strcmp(info.ChosenColor(inds12),'p-1.jpg')), ch='p'; end
-if any(strcmp(info.ChosenColor(inds12),'b-1.jpg')), ch='b'; end
+ch = 'NO_VALID_CHOSENCOLOR';  % Fail by default
+if any(strncmp(info.ChosenColor(inds12),'g',1)), ch='g'; end
+if any(strncmp(info.ChosenColor(inds12),'r',1)), ch='r'; end
+if any(strncmp(info.ChosenColor(inds12),'p',1)), ch='p'; end
+if any(strncmp(info.ChosenColor(inds12),'b',1)), ch='b'; end
 
 % Coding and fit for "easy". Default to NaN so fitModel will ignore
 % responses or trials with missing info.
